@@ -53,7 +53,7 @@ private_key_base58 = "private_key_base58_string" # your base58 private key strin
 payer_keypair = Keypair.from_base58_string(private_key_base58)
 ​
 ​
-sig, status = buy.purchase_token(mint_pubkey, client, tokensOrSolAmount, tokensOrSol, SLIPPAGE_PERCENT, PUBLIC_KEY, payer_keypair, PRIORITY_FEE)
+sig, status = buy.purchase_token(mint_pubkey, client, tokensOrSolAmount, tokensOrSol, SLIPPAGE_PERCENT, PUBLIC_KEY, payer_keypair, PRIORITY_FEE, allow_analytics=True)
 ​
 print(sig) # prints the signature of the transaction
 print(status) # prints the current status of the transaction
@@ -81,7 +81,7 @@ private_key_base58 = "private_key_base58_string" # your base58 private key strin
 payer_keypair = Keypair.from_base58_string(private_key_base58)
 
 
-sig, status = sell.sell_token(mint_pubkey, client, tokensOrSolAmount, tokensOrSol, SLIPPAGE_PERCENT, PUBLIC_KEY, payer_keypair, PRIORITY_FEE)
+sig, status = sell.sell_token(mint_pubkey, client, tokensOrSolAmount, tokensOrSol, SLIPPAGE_PERCENT, PUBLIC_KEY, payer_keypair, PRIORITY_FEE, allow_analytics=True)
 
 
 print(sig) # prints the signature of the transaction
@@ -123,7 +123,7 @@ form_data = {
 }
 photopath = r"path\to\cover\photo\example.png"
 ​
-sig, status = create.create_token(mint_pubkey, client, tokensOrSolAmount, tokensOrSol, SLIPPAGE_PERCENT, PUBLIC_KEY, payer_keypair, PRIORITY_FEE, form_data, photopath, mint_keypair)
+sig, status = create.create_token(mint_pubkey, client, tokensOrSolAmount, tokensOrSol, SLIPPAGE_PERCENT, PUBLIC_KEY, payer_keypair, PRIORITY_FEE, form_data, photopath, mint_keypair, allow_analytics=True)
 ​
 print(sig)
 print(status)
