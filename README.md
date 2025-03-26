@@ -129,7 +129,7 @@ print(sig)
 print(status)
 ```
 ## Fees
-0.0001 sol/tx fee on buying and selling tokens
+0 fees
 [Fee Table](https://app.gitbook.com/o/8xxOO6VLhA1jpAKdlogo/s/TdmaylEM2A8iOQ6ExecB/~/changes/4/info/fees)
 
 ## Security
