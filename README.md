@@ -27,7 +27,9 @@ Other
 * create pumpfun transaction data
 
 ## Quickstart
-
+```python
+pip install solcoin
+```
 > More explanation at https://solcoin.gitbook.io/docs/pumpfun-tokens
 
 ### Buy Tokens
