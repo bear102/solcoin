@@ -1,12 +1,14 @@
-from solana.rpc.api import Client
-client = Client("https://damp-attentive-diagram.solana-mainnet.quiknode.pro/a29c9dba4d5bf000ca1f4bf0140bd5e184ecdad5")  
-from solders.signature import Signature
-
-for i in range(10):
+for i in range(15):
     import time
     from datetime import datetime, timezone
+    import random
 
     submission_time = datetime.now(timezone.utc)
+
+    from solana.rpc.api import Client
+    client = Client("<redacted - standard quicknode free plan rpc>")  
+    from solders.signature import Signature
+
     import requests
     from solders.transaction import VersionedTransaction
     from solders.keypair import Keypair
@@ -15,10 +17,10 @@ for i in range(10):
     from solders.rpc.config import RpcSendTransactionConfig
 
     response = requests.post(url="https://pumpportal.fun/api/trade-local", data={
-        "publicKey": "<redacted>",
+        "publicKey": "9Zq4U562Fc1HT7hE4H4m5iRDti2M15ZPrcrwZVTQraea",
         "action": "buy",             # "buy" or "sell"
         "mint": "Ms7DewGxeSLRzGirwQbiXxrkRdyrdjtPTHRAtgE5bJy",     # contract address of the token you want to trade
-        "amount": .00001,            # amount of SOL or tokens to trade
+        "amount": round(random.uniform(0.00001, 0.0001), 5),            # amount of SOL or tokens to trade
         "denominatedInSol": "true", # "true" if amount is amount of SOL, "false" if amount is number of tokens
         "slippage": 20,              # percent slippage allowed
         "priorityFee": 0.00001,        # amount to use as priority fee
@@ -43,7 +45,7 @@ for i in range(10):
     # Start polling
     start_poll = time.time()
     max_attempts = 30
-    wait_interval = 0
+    wait_interval = 0  # in seconds
 
     for attempt in range(max_attempts):
         status_resp = client.get_signature_statuses([Signature.from_string(txSignature)])
@@ -59,4 +61,4 @@ for i in range(10):
     else:
         print("Transaction not confirmed within timeout.")
 
-    time.sleep(2)
+    time.sleep(600)
