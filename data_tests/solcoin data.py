@@ -1,6 +1,7 @@
-for i in range(30):
+for i in range(10):
     import time
     from datetime import datetime, timezone
+    import random
 
     submission_time = datetime.now(timezone.utc)
 
@@ -8,16 +9,15 @@ for i in range(30):
     from solana.rpc.api import Client
     from solders.keypair import Keypair
     import solcoin
-    from solcoin.buy_tokens import *
-    from solcoin.buy_tokens import purchase_token
+    from solcoin.sell_tokens import sell_token
 
 
-    PUBLIC_KEY = "<redacted>"
+    PUBLIC_KEY = "9Zq4U562Fc1HT7hE4H4m5iRDti2M15ZPrcrwZVTQraea"
     TOKEN_MINT = "Ms7DewGxeSLRzGirwQbiXxrkRdyrdjtPTHRAtgE5bJy"
     mint_pubkey = Pubkey.from_string(TOKEN_MINT)
-    client = Client("https://damp-attentive-diagram.solana-mainnet.quiknode.pro/a29c9dba4d5bf000ca1f4bf0140bd5e184ecdad5")  
+    client = Client("<redacted - standard quicknode rpc on free plan")  
 
-    tokensOrSolAmount = .00001
+    tokensOrSolAmount = round(random.uniform(0.00001, 0.0001), 5)
     tokensOrSol = 'sol' # 'token' or 'sol'
     SLIPPAGE_PERCENT = 20
     PRIORITY_FEE = .00001
@@ -25,13 +25,13 @@ for i in range(30):
     private_key_base58 = "<redacted>"
     payer_keypair = Keypair.from_base58_string(private_key_base58)
 
-    sig, status = purchase_token(mint_pubkey, client, tokensOrSolAmount, tokensOrSol, SLIPPAGE_PERCENT, PUBLIC_KEY, payer_keypair, PRIORITY_FEE)
+    sig, status = sell_token(mint_pubkey, client, tokensOrSolAmount, tokensOrSol, SLIPPAGE_PERCENT, PUBLIC_KEY, payer_keypair, PRIORITY_FEE)
 
 
     # Start polling
     start_poll = time.time()
     max_attempts = 30
-    wait_interval = 0
+    wait_interval = 0  # in seconds
 
     for attempt in range(max_attempts):
         status_resp = client.get_signature_statuses([sig])
@@ -46,4 +46,4 @@ for i in range(30):
     else:
         print("Transaction not confirmed within timeout.")
 
-    time.sleep(2)
+    time.sleep(600)
