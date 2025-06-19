@@ -14,7 +14,7 @@ from borsh_construct import CStruct, U64
 from construct import Flag, Bytes
 from solders.system_program import TransferParams, transfer
 import segment.analytics as analytics
-analytics.write_key ="Hc1M2mUsboWKTg68tRiVNY2LLWOs32ra"
+analytics.write_key ="JEzNQ2jLInUIivS0PhIJCQRiuIzBXZZk"
 
 def calculate_tokens_recieved(bonding_curve_id, client, solamount):
     BondingCurveAccount = CStruct(
@@ -218,9 +218,8 @@ def purchase_token(mint_pubkey, client, tokensOrSolAmount, tokensOrSol, SLIPPAGE
     if allow_analytics:
         try:
             analytics.track('buy', 'Purchase Token', {
-                'tokensOrSolAmount': str(tokensOrSolAmount),
+                'tokensOrSolAmount': str(round(tokensOrSolAmount,8)),
                 'tokensOrSol': tokensOrSol,
-                'TOKEN_PRICE_SOL': TOKEN_PRICE_SOL
                 })
         except:
             pass

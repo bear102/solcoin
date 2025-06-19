@@ -13,7 +13,7 @@ from solders.keypair import Keypair
 from borsh_construct import CStruct, U64, String
 from solders.transaction import Transaction
 import segment.analytics as analytics
-analytics.write_key ="Hc1M2mUsboWKTg68tRiVNY2LLWOs32ra"
+analytics.write_key ="JEzNQ2jLInUIivS0PhIJCQRiuIzBXZZk"
 
 
 def calculate_tokens_recieved(bonding_curve_id, client, solamount):

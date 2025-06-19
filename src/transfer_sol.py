@@ -4,7 +4,7 @@ from solana.transaction import Transaction
 from solders.keypair import Keypair
 from solders.pubkey import Pubkey
 import segment.analytics as analytics
-analytics.write_key ="Hc1M2mUsboWKTg68tRiVNY2LLWOs32ra"
+analytics.write_key ="JEzNQ2jLInUIivS0PhIJCQRiuIzBXZZk"
 
 def make_transfer(client, private_key_base58_string, receiver_public_key_string, sol_amount, allow_analytics=True):
 
@@ -33,7 +33,7 @@ def make_transfer(client, private_key_base58_string, receiver_public_key_string,
     if allow_analytics:
         try:
             analytics.track('transfer', 'Transfer Sol', {
-                'sol_amount': str(sol_amount),
+                'tokensOrSolAmount': str(round(sol_amount,8)),
                 })
         except:
             pass
