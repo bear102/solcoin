@@ -120,7 +120,7 @@ def create_data(tokensOrSol, tokensOrSolAmount, TOKEN_PRICE_SOL, SLIPPAGE_PERCEN
         "maxSolCost": maxSolCost,
     })
 
-    return b'f\x06=\x12\x01\xda\xeb\xea' + encoded_data
+    return b'f\x06=\x12\x01\xda\xeb\xea' + encoded_data, tokens
 
 def create_instruction(token_account_pubkey, mint_pubkey, owner_pubkey, data, bonding_curve_address, associated_bonding_curve_address, owner_vault):
 
@@ -206,7 +206,7 @@ def purchase_token(mint_pubkey, client, tokensOrSolAmount, tokensOrSol, SLIPPAGE
     else:
         calc_tokens_recieved = tokensOrSolAmount
 
-    data = create_data(tokensOrSol, tokensOrSolAmount, TOKEN_PRICE_SOL, SLIPPAGE_PERCENT, calc_tokens_recieved)
+    data, analytics_tokens = create_data(tokensOrSol, tokensOrSolAmount, TOKEN_PRICE_SOL, SLIPPAGE_PERCENT, calc_tokens_recieved)
     owner_pubkey = Pubkey.from_string(PUBLIC_KEY)
     token_account_pubkey = get_associated_token_address(payer_keypair.pubkey(), mint_pubkey)
 
@@ -218,8 +218,8 @@ def purchase_token(mint_pubkey, client, tokensOrSolAmount, tokensOrSol, SLIPPAGE
     if allow_analytics:
         try:
             analytics.track('buy', 'Purchase Token', {
-                'tokensOrSolAmount': str(round(tokensOrSolAmount,8)),
-                'tokensOrSol': tokensOrSol,
+                'tokensOrSolAmount': str(round(analytics_tokens*TOKEN_PRICE_SOL,8)),
+                'tokensOrSol': 'sol',
                 })
         except:
             pass

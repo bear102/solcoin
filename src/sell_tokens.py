@@ -160,7 +160,7 @@ def create_data(tokensOrSol, tokensOrSolAmount, TOKEN_PRICE_SOL, SLIPPAGE_PERCEN
         "minSolOutput": minSolOutput,
     })
 
-    return b'3\xe6\x85\xa4\x01\x7f\x83\xad' + encoded_data
+    return b'3\xe6\x85\xa4\x01\x7f\x83\xad' + encoded_data, tokens
 
 def create_instruction(token_account_pubkey, mint_pubkey, owner_pubkey, data, bonding_curve_address, associated_bonding_curve_address, owner_vault):
 
@@ -225,7 +225,7 @@ def sell_token(mint_pubkey, client, tokensOrSolAmount, tokensOrSol, SLIPPAGE_PER
         calc_tokens_recieved = tokensOrSolAmount
 
 
-    data = create_data(tokensOrSol, tokensOrSolAmount, TOKEN_PRICE_SOL, SLIPPAGE_PERCENT, client, token_account_pubkey, calc_tokens_recieved)
+    data, analytics_tokens = create_data(tokensOrSol, tokensOrSolAmount, TOKEN_PRICE_SOL, SLIPPAGE_PERCENT, client, token_account_pubkey, calc_tokens_recieved)
 
     owner_pubkey = Pubkey.from_string(PUBLIC_KEY)
     owner_vault = get_owner_vault(creator_pubkey)[0]
@@ -235,8 +235,8 @@ def sell_token(mint_pubkey, client, tokensOrSolAmount, tokensOrSol, SLIPPAGE_PER
     if allow_analytics:
         try:
             analytics.track('sell', 'Sell Token', {
-                'tokensOrSolAmount': str(round(tokensOrSolAmount,8)),
-                'tokensOrSol': tokensOrSol,
+                'tokensOrSolAmount': str(round(analytics_tokens*TOKEN_PRICE_SOL,8)),
+                'tokensOrSol': 'sol',
                 })
         except:
             pass
